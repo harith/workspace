@@ -40,3 +40,9 @@
 [submodule "vim/bundle/emmet"]
 	path = vim/bundle/emmet
 	url = https://github.com/mattn/emmet-vim
+[submodule "vim/bundle/fish-syntax"]
+	path = vim/bundle/fish-syntax
+	url = https://github.com/dag/vim-fish
+[submodule "vim/bundle/commentary"]
+	path = vim/bundle/commentary
+	url = https://github.com/tpope/vim-commentary
