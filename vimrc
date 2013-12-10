@@ -14,17 +14,25 @@ filetype plugin indent on
 set nu
 set hlsearch
 syntax on
+let mapleader = ";"
 
 " split variables
 set splitright
 set splitbelow
 
-let mapleader = ","
+" commenting shortcuts
+imap <Leader>c <Esc>gc
+nmap <Leader>c <Esc>gc
+vmap <Leader>c gcc
+imap <Leader>u <Esc>gcu
+nmap <Leader>u <Esc>gcu
+vmap <Leader>u gcu
+
+" arpeggio chords
 call arpeggio#map('in', '', 0, 'ij', '<Esc>')
 call arpeggio#map('in', '', 0, 'fj', '<Esc>:w<CR>')
 call arpeggio#map('in', '', 0, 'jq', '<Esc>:q<CR>')
 call arpeggio#map('in', '', 0, 'sp', '<Esc>:set paste<CR>i')
-call arpeggio#map('in', '', 0, 'np', '<Esc>:set nopaste<CR>')
 
 " style
 set laststatus=2
