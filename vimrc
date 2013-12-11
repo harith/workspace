@@ -23,7 +23,7 @@ set splitbelow
 " commenting shortcuts
 imap <Leader>c <Esc>gc
 nmap <Leader>c <Esc>gc
-vmap <Leader>c gcc
+vmap <Leader>c gc
 imap <Leader>u <Esc>gcu
 nmap <Leader>u <Esc>gcu
 vmap <Leader>u gcu
