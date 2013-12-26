@@ -4,21 +4,26 @@ execute pathogen#infect()
 " indentation and formatting
 set autoindent
 set cindent
+set expandtab
 set tabstop=4
 set shiftwidth=4
-set expandtab
 set textwidth=0
-filetype plugin indent on
-
-" utils
-set nu
+set backspace=2
+set ignorecase
+set incsearch
 set hlsearch
-syntax on
-let mapleader = ";"
-
-" split variables
 set splitright
 set splitbelow
+set nu
+set laststatus=2
+set scrolloff=1
+set showcmd
+
+syntax on
+filetype plugin indent on
+let mapleader = ";"
+
+let g:EasyMotion_leader_key = '<Leader>a'
 
 " commenting shortcuts
 imap <Leader>c <Esc>gc
@@ -32,10 +37,7 @@ vmap <Leader>u gcu
 call arpeggio#map('in', '', 0, 'ij', '<Esc>')
 call arpeggio#map('in', '', 0, 'fj', '<Esc>:w<CR>')
 call arpeggio#map('in', '', 0, 'jq', '<Esc>:q<CR>')
-call arpeggio#map('in', '', 0, 'sp', '<Esc>:set paste<CR>i')
 
-" style
-set laststatus=2
 
 " Show syntax highlighting groups for word under cursor
 nmap <C-S-P> :call <SID>SynStack()<CR>

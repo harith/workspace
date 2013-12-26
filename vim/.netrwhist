@@ -1,6 +1,10 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =4
+let g:netrw_dirhist_cnt =8
 let g:netrw_dirhist_1='/Users/harith/Work/42events/www/app/views/search/results'
 let g:netrw_dirhist_2='/Users/harith/Work/thecakeisalie.in/_posts'
 let g:netrw_dirhist_3='/Users/harith/.vim/bundle'
 let g:netrw_dirhist_4='/Users/harith/.vim/bundle/supertab'
+let g:netrw_dirhist_5='/Users/harith/.config/fish'
+let g:netrw_dirhist_6='/Users/harith/.config/fish/functions'
+let g:netrw_dirhist_7='/Users/harith/.config/fish'
+let g:netrw_dirhist_8='/Users/harith/Work'

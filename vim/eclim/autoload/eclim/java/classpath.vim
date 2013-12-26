@@ -28,88 +28,26 @@
     \ '-command java_classpath_variable_create -n "<name>" -p "<path>"'
   let s:command_variable_delete =
     \ '-command java_classpath_variable_delete -n "<name>"'
-
-  let s:entry_project =
-    \ "\t<classpathentry exported=\"true\" kind=\"src\" path=\"/<path>\"/>"
-  let s:entry ="\t<classpathentry kind=\"<kind>\" path=\"<path>\"/>"
-  let s:entry_sourcepath =
-    \ "\t<classpathentry kind=\"<kind>\" path=\"<path>\"\n\t\t\tsourcepath=\"<src>\"/>"
-  let s:entry_javadoc =
-    \ "\t<classpathentry kind=\"<kind>\" path=\"<path>\"\n" .
-    \ "\t\t\tsourcepath=\"<src>\">\n" .
-    \ "\t\t<attributes>\n" .
-    \ "\t\t\t<attribute name=\"javadoc_location\" value=\"<javadoc>\"/>\n" .
-    \ "\t\t</attributes>\n" .
-    \ "\t</classpathentry>"
 " }}}
 
-function! eclim#java#classpath#NewClasspathEntry(kind, arg, ...) " {{{
-  " Adds a new entry to the current .classpath file.
-  let template_name = 's:entry'
-  let args = {'kind': a:kind, 'path': substitute(a:arg, '\', '/', 'g')}
-  if a:0
-    if a:0 == 1
-      let template_name = 's:entry_sourcepath'
-      let args['src'] = substitute(a:1, '\', '/', 'g')
-    elseif a:0 == 2
-      let template_name = 's:entry_javadoc'
-      let args['src'] = substitute(a:1, '\', '/', 'g')
-      let javadoc = substitute(a:2, '\', '/', 'g')
-      let absolute = javadoc =~? '^\([a-z]:\)\?/'
-
-      " handle absolute vs project relative javadoc location
-      if absolute
-        " windows paths need a leading slash
-        if javadoc =~? '^[a-z]:/'
-          let javadoc = '/' . javadoc
-        endif
-        let javadoc = 'file:' . javadoc
-      else
-        if !eclim#project#util#IsCurrentFileInProject(1)
-          return
-        endif
-        if javadoc =~? '\.jar$'
-          let project = eclim#project#util#GetCurrentProjectName()
-          let javadoc = 'platform:/resource/' . project . '/' . javadoc
-        else
-          " relative dirs must be made absolute
-          let project = eclim#project#util#GetCurrentProjectRoot()
-          let javadoc = project . '/' . javadoc
-        endif
-      endif
-
-      if javadoc =~? '\.jar$'
-        let javadoc = 'jar:' . javadoc . '!/'
-      elseif javadoc !~ '^file:'
-        let javadoc = 'file:' . javadoc
-      endif
-      let args['javadoc'] = javadoc
-    else
-      call eclim#util#EchoError('Too many arguments.')
-      return
-    endif
-  endif
-
-  if exists(template_name . '_' . a:kind)
-    let template = {template_name}_{a:kind}
-  else
-    let template = {template_name}
-  endif
-
-  for [key, value] in items(args)
-    let template = substitute(template, '<' . key . '>', value, 'g')
-  endfor
-
+" NewClasspathEntry(template) {{{
+" Adds a new entry to the current .classpath file.
+function! eclim#java#classpath#NewClasspathEntry(arg, template)
+  let args = split(a:arg)
   let cline = line('.')
   let ccol = col('.')
-  call s:MoveToInsertPosition()
-  let line = line('.')
-  call append(line, split(template, '\n'))
+  for arg in args
+    call s:MoveToInsertPosition()
+    let line = line('.')
+    call append(line, split(substitute(a:template, '<arg>', arg, 'g'), '\n'))
+    call cursor(line + 1, 1)
+  endfor
   call cursor(cline + 1, ccol)
 endfunction " }}}
 
-function! s:MoveToInsertPosition() " {{{
-  " If necessary moves the cursor to a valid insert position.
+" MoveToInsertPosition() {{{
+" If necessary moves the cursor to a valid insert position.
+function! s:MoveToInsertPosition()
   let start = search('<classpath\s*>', 'wn')
   let end = search('</classpath\s*>', 'wn')
   if line('.') < start || line('.') >= end
@@ -117,7 +55,9 @@ function! s:MoveToInsertPosition() " {{{
   endif
 endfunction " }}}
 
-function! eclim#java#classpath#GetVariableNames() " {{{
+" GetVariableNames() {{{
+" Gets a list of all variable names.
+function! eclim#java#classpath#GetVariableNames()
   let variables = eclim#Execute(s:command_variables)
   if type(variables) != g:LIST_TYPE
     return []
@@ -125,7 +65,9 @@ function! eclim#java#classpath#GetVariableNames() " {{{
   return map(variables, "v:val.name")
 endfunction " }}}
 
-function! eclim#java#classpath#VariableList() " {{{
+" VariableList() {{{
+" Lists all the variables currently available.
+function! eclim#java#classpath#VariableList()
   let variables = eclim#Execute(s:command_variables)
   if type(variables) != g:LIST_TYPE
     return
@@ -147,7 +89,9 @@ function! eclim#java#classpath#VariableList() " {{{
   call eclim#util#Echo(join(output, "\n"))
 endfunction " }}}
 
-function! eclim#java#classpath#VariableCreate(name, path) " {{{
+" VariableCreate(name, path) {{{
+" Create or update a variable.
+function! eclim#java#classpath#VariableCreate(name, path)
   let path = substitute(fnamemodify(a:path, ':p'), '\', '/', 'g')
   if has('win32unix')
     let path = eclim#cygwin#WindowsPath(path)
@@ -162,7 +106,9 @@ function! eclim#java#classpath#VariableCreate(name, path) " {{{
   endif
 endfunction " }}}
 
-function! eclim#java#classpath#VariableDelete(name) " {{{
+" VariableDelete(name) {{{
+" Delete a variable.
+function! eclim#java#classpath#VariableDelete(name)
   let command = s:command_variable_delete
   let command = substitute(command, '<name>', a:name, '')
 
@@ -172,8 +118,9 @@ function! eclim#java#classpath#VariableDelete(name) " {{{
   endif
 endfunction " }}}
 
-function! eclim#java#classpath#CommandCompleteVar(argLead, cmdLine, cursorPos) " {{{
-  " Custom command completion for classpath var relative files.
+" CommandCompleteVar(argLead, cmdLine, cursorPos) {{{
+" Custom command completion for classpath var relative files.
+function! eclim#java#classpath#CommandCompleteVar(argLead, cmdLine, cursorPos)
   let cmdTail = strpart(a:cmdLine, a:cursorPos)
   let argLead = substitute(a:argLead, cmdTail . '$', '', '')
 
@@ -183,8 +130,9 @@ function! eclim#java#classpath#CommandCompleteVar(argLead, cmdLine, cursorPos) "
   return vars
 endfunction " }}}
 
-function! eclim#java#classpath#CommandCompleteVarPath(argLead, cmdLine, cursorPos) " {{{
-  " Custom command completion for classpath var relative files.
+" CommandCompleteVarPath(argLead, cmdLine, cursorPos) {{{
+" Custom command completion for classpath var relative files.
+function! eclim#java#classpath#CommandCompleteVarPath(argLead, cmdLine, cursorPos)
   let cmdLine = strpart(a:cmdLine, 0, a:cursorPos)
   let args = eclim#util#ParseCmdLine(cmdLine)
   let argLead = cmdLine =~ '\s$' ? '' : args[len(args) - 1]
@@ -224,8 +172,9 @@ function! eclim#java#classpath#CommandCompleteVarPath(argLead, cmdLine, cursorPo
   return files
 endfunction " }}}
 
-function! eclim#java#classpath#CommandCompleteVarAndDir(argLead, cmdLine, cursorPos) " {{{
-  " Custom command completion for classpath var relative files.
+" CommandCompleteVarAndDir(argLead, cmdLine, cursorPos) {{{
+" Custom command completion for classpath var relative files.
+function! eclim#java#classpath#CommandCompleteVarAndDir(argLead, cmdLine, cursorPos)
   let cmdLine = strpart(a:cmdLine, 0, a:cursorPos)
   let args = eclim#util#ParseCmdLine(cmdLine)
   let argLead = cmdLine =~ '\s$' ? '' : args[len(args) - 1]

@@ -5,7 +5,7 @@
 "
 " License:
 "
-" Copyright (C) 2005 - 2013  Eric Van Dewoestine
+" Copyright (C) 2005 - 2012  Eric Van Dewoestine
 "
 " This program is free software: you can redistribute it and/or modify
 " it under the terms of the GNU General Public License as published by
@@ -22,6 +22,26 @@
 "
 " }}}
 
+" Script Variables {{{
+  let s:entry_src = "\t<classpathentry kind=\"src\" path=\"<arg>\"/>"
+  let s:entry_project =
+    \ "\t<classpathentry exported=\"true\" kind=\"src\" path=\"/<arg>\"/>"
+  let s:entry_var =
+    \ "\t<classpathentry kind=\"<kind>\" path=\"<arg>\"/>"
+  "  \ "\t<classpathentry exported=\"true\" kind=\"<kind>\" path=\"<arg>\">\n" .
+  "  \ "\t\t<!--\n" .
+  "  \ "\t\t\tsourcepath=\"<path>\">\n" .
+  "  \ "\t\t-->\n" .
+  "  \ "\t\t<!--\n" .
+  "  \ "\t\t<attributes>\n" .
+  "  \ "\t\t\t<attribute value=\"file:<javadoc>\" name=\"javadoc_location\"/>\n" .
+  "  \ "\t\t</attributes>\n" .
+  "  \ "\t\t-->\n" .
+  "  \ "\t</classpathentry>"
+  let s:entry_jar = substitute(s:entry_var, '<kind>', 'lib', '')
+  let s:entry_var = substitute(s:entry_var, '<kind>', 'var', '')
+" }}}
+
 " load any xml related functionality
 runtime! ftplugin/xml.vim
 runtime! indent/xml.vim
@@ -33,22 +53,24 @@ augroup END
 
 " Command Declarations {{{
 if !exists(":NewSrcEntry")
-  command -nargs=1 -complete=customlist,eclim#project#util#CommandCompleteProjectRelative -buffer
-    \ NewSrcEntry :call eclim#java#classpath#NewClasspathEntry('src', '<args>')
+  command -nargs=+ -complete=customlist,eclim#project#util#CommandCompleteProjectRelative -buffer
+    \ NewSrcEntry :call eclim#java#classpath#NewClasspathEntry
+    \     (substitute('<args>', '\', '/', 'g') , s:entry_src)
 endif
 if !exists(":NewProjectEntry")
-  command -nargs=1 -complete=customlist,eclim#java#util#CommandCompleteProject -buffer
-    \ NewProjectEntry :call eclim#java#classpath#NewClasspathEntry('project', '<args>')
+  command -nargs=+ -complete=customlist,eclim#java#util#CommandCompleteProject -buffer
+    \ NewProjectEntry :call eclim#java#classpath#NewClasspathEntry('<args>', s:entry_project)
 endif
 if !exists(":NewJarEntry")
-  command -nargs=+ -complete=customlist,eclim#project#util#CommandCompleteAbsoluteOrProjectRelative -buffer
-    \ NewJarEntry
-    \ :call eclim#java#classpath#NewClasspathEntry('lib', <f-args>)
+  command -nargs=+ -complete=file -buffer NewJarEntry
+    \ :call eclim#java#classpath#NewClasspathEntry
+    \     (substitute('<args>', '\', '/', 'g'), s:entry_jar)
 endif
 if !exists(":NewVarEntry")
   command -nargs=+ -complete=customlist,eclim#java#classpath#CommandCompleteVarPath -buffer
     \ NewVarEntry
-    \ :call eclim#java#classpath#NewClasspathEntry('var', <f-args>)
+    \ :call eclim#java#classpath#NewClasspathEntry
+    \     (substitute('<args>', '\', '/', 'g'), s:entry_var)
 endif
 if !exists(":VariableList")
   command -buffer VariableList :call eclim#java#classpath#VariableList()
