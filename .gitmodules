@@ -49,6 +49,6 @@
 [submodule "vim/bundle/easymotion"]
 	path = vim/bundle/easymotion
 	url = https://github.com/Lokaltog/vim-easymotion.git
-[submodule "workspace-config/tmux-powerline"]
-	path = workspace-config/tmux-powerline
-	url = https://github.com/erikw/tmux-powerline.git
+[submodule "workspace-deps/shellmarks"]
+	path = workspace-deps/shellmarks
+	url = https://gist.github.com/8340924.git
