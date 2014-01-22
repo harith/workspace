@@ -55,3 +55,6 @@
 [submodule "workspace-deps/tmux-powerline"]
 	path = workspace-deps/tmux-powerline
 	url = https://github.com/erikw/tmux-powerline.git
+[submodule "workspace-deps/tmux-powerline/repo"]
+	path = workspace-deps/tmux-powerline/repo
+	url = https://github.com/erikw/tmux-powerline.git
