@@ -1,5 +1,6 @@
 runtime bundle/pathogen/autoload/pathogen.vim
 execute pathogen#infect()
+" set rtp+=~/.workspace-deps/powerline/repo/powerline/bindings/vim
 
 " indentation and formatting
 set autoindent
@@ -57,11 +58,11 @@ colorscheme solarized
 hi NonText ctermfg=234
 " make the normal text a little brighter
 hi Normal ctermfg=250
-let g:airline_left_sep = ''
-let g:airline_right_sep = ''
-let g:airline_fugitive_prefix='⎇  '
-let g:airline_theme = 'solarized'
 
 " for writing in zen mode 
 let g:vimroom_sidebar_height=0
 let g:vimroom_width=120
+
+" powerline config
+set encoding=utf-8
+source ~/.workspace-deps/powerline/repo/powerline/bindings/vim/plugin/powerline.vim
