@@ -5,7 +5,8 @@
 			"before": "ⓔ  "
 		},
 		"branch": {
-			"before": " "
+			"before": " ",
+            "status_colors": true
 		}
 	},
 	"segments": {
