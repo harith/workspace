@@ -21,10 +21,6 @@
 				}
 			},
 			{
-				"module": "powerline.segments.shell",
-				"name": "jobnum"
-			},
-			{
 				"name": "branch"
 			}
 		],
