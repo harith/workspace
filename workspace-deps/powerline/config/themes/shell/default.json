@@ -1,0 +1,33 @@
+{
+	"default_module": "powerline.segments.common",
+	"segment_data": {
+		"virtualenv": {
+			"before": "ⓔ  "
+		},
+		"branch": {
+			"before": " "
+		}
+	},
+	"segments": {
+		"left": [
+			{
+				"name": "virtualenv"
+			},
+			{
+				"name": "cwd",
+				"args": {
+					"dir_limit_depth": 3
+				}
+			},
+			{
+				"module": "powerline.segments.shell",
+				"name": "jobnum"
+			},
+			{
+				"name": "branch"
+			}
+		],
+		"right": [
+		]
+	}
+}

@@ -1,0 +1,44 @@
+{
+	"default_module": "powerline.segments.common",
+	"segment_data": {
+		"hostname": {
+			"before": " ",
+			"args": {
+				"only_if_ssh": false,
+                "exclude_domain": true
+			}
+		},
+		"uptime": {
+			"before": "⇑  "
+		},
+		"date": {
+			"before": "⌚ "
+		}
+	},
+	"segments": {
+		"right": [
+            {
+                "name": "battery"
+            },
+			{
+				"name": "weather",
+                "args": {
+                    "location_query": "hyderabad, india"
+                }
+			},
+			{
+				"name": "date"
+			},
+			{
+				"name": "date",
+				"args": {
+					"format": "%H:%M",
+					"istime": true
+				}
+			},
+			{
+				"name": "hostname"
+			}
+		]
+	}
+}

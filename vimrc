@@ -19,6 +19,7 @@ set nu
 set laststatus=2
 set scrolloff=1
 set showcmd
+set noshowmode
 
 syntax on
 filetype plugin indent on
