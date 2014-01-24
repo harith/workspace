@@ -17,9 +17,6 @@
 	},
 	"segments": {
 		"right": [
-            {
-                "name": "battery"
-            },
 			{
 				"name": "weather",
                 "args": {
