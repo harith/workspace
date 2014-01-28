@@ -1,6 +1,13 @@
 {
 	"default_module": "powerline.segments.common",
 	"segment_data": {
+		"hostname": {
+			"before": " ",
+			"args": {
+				"only_if_ssh": true,
+                "exclude_domain": true
+			}
+		},
 		"virtualenv": {
 			"before": "ⓔ  "
 		},
@@ -11,6 +18,9 @@
 	},
 	"segments": {
 		"left": [
+			{
+				"name": "hostname"
+			},
 			{
 				"name": "virtualenv"
 			},
