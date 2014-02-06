@@ -61,3 +61,6 @@
 [submodule "workspace-deps/powerline/repo"]
 	path = workspace-deps/powerline/repo
 	url = https://github.com/Lokaltog/powerline.git
+[submodule "vim/bundle/slim"]
+	path = vim/bundle/slim
+	url = https://github.com/slim-template/vim-slim.git
