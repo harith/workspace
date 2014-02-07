@@ -27,6 +27,9 @@ let mapleader = ";"
 
 let g:EasyMotion_leader_key = '<Leader>a'
 
+" EasyAlign configuration
+vmap <Enter> <Plug>(EasyAlign)
+
 " commenting shortcuts
 imap <Leader>c <Esc>gc
 nmap <Leader>c <Esc>gc
