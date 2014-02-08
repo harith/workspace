@@ -20,6 +20,8 @@ set laststatus=2
 set scrolloff=1
 set showcmd
 set noshowmode
+autocmd FileType ruby set tabstop=2|set shiftwidth=2
+autocmd FileType slim set tabstop=2|set shiftwidth=2
 
 syntax on
 filetype plugin indent on
