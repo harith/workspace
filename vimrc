@@ -72,3 +72,6 @@ let g:vimroom_width=120
 " powerline config
 set encoding=utf-8
 source ~/.workspace-deps/powerline/repo/powerline/bindings/vim/plugin/powerline.vim
+
+" load tags
+set tags=.tags
