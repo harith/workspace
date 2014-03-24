@@ -75,3 +75,7 @@ source ~/.workspace-deps/powerline/repo/powerline/bindings/vim/plugin/powerline.
 
 " load tags
 set tags=.tags
+
+" Ultisnips config
+set runtimepath+=bundle/snippets/
+let g:UltiSnipsEditSplit="vertical"
