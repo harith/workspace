@@ -79,3 +79,13 @@ set tags=.tags
 " Ultisnips config
 set runtimepath+=bundle/snippets/
 let g:UltiSnipsEditSplit="vertical"
+
+" Ag (silver searcher) config
+" shift+k generally opens man page. remap it to Ag for word under cursor
+nmap K yiw:Ag! <C-r>"<CR>
+let g:aghighlight=1
+let g:ag_lhandler="vertical lopen"
+
+" ctrlp config
+let g:ctrlp_working_path_mode = 'rwa'
+let g:ctrlp_by_filename = 1
