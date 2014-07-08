@@ -89,3 +89,6 @@ let g:ag_lhandler="vertical lopen"
 " ctrlp config
 let g:ctrlp_working_path_mode = 'rwa'
 let g:ctrlp_by_filename = 1
+
+" sneak config: hit s to go to next match
+let g:sneak#s_next = 1
