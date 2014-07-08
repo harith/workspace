@@ -92,3 +92,4 @@ let g:ctrlp_by_filename = 1
 
 " sneak config: hit s to go to next match
 let g:sneak#s_next = 1
+let g:sneak#streak = 1
