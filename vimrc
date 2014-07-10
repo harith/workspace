@@ -27,6 +27,7 @@ syntax on
 filetype plugin indent on
 let mapleader = ";"
 
+set pastetoggle=<leader>z
 let g:EasyMotion_leader_key = '<Leader>a'
 
 " EasyAlign configuration
@@ -93,3 +94,4 @@ let g:ctrlp_by_filename = 1
 " sneak config: hit s to go to next match
 let g:sneak#s_next = 1
 let g:sneak#streak = 1
+let g:sneak#use_ic_scs = 1
