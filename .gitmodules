@@ -76,3 +76,6 @@
 [submodule "vim/bundle/sneak"]
 	path = vim/bundle/sneak
 	url = https://github.com/justinmk/vim-sneak
+[submodule "vim/bundle/howdoi"]
+	path = vim/bundle/howdoi
+	url = https://github.com/laurentgoudet/vim-howdoi
