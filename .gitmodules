@@ -79,3 +79,6 @@
 [submodule "vim/bundle/howdoi"]
 	path = vim/bundle/howdoi
 	url = https://github.com/laurentgoudet/vim-howdoi
+[submodule "vim/bundle/rspec"]
+	path = vim/bundle/rspec
+	url = https://github.com/thoughtbot/vim-rspec
